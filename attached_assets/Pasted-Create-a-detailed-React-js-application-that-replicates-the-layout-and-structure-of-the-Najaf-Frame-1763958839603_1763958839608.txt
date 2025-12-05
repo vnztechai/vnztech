@@ -1,0 +1,60 @@
+Create a detailed React.js application that replicates the layout and structure of the "Najaf" Framer template, a clean, modern, and fully responsive one-page SaaS/AI landing page. Use React 18+ with functional components, hooks (e.g., useState for interactions like FAQ toggles), and no external UI libraries except for basic ones like React Icons for subtle icons. Style everything with Tailwind CSS for rapid, responsive design—ensure mobile-first responsiveness with breakpoints for tablet and desktop. Incorporate smooth animations using Framer Motion (import it as a dependency) for scroll-triggered reveals, hover effects on buttons/cards, and fade-ins on section loads.
+
+### Overall Structure and App Hierarchy:
+- **App.js**: Root component with a single-page layout using React Router or simple anchor-based scrolling (via react-scroll for smooth navigation). Wrap everything in a <div className="min-h-screen bg-gray-900 text-white"> for a dark-themed base (primary color: #0f0f23 dark blue-black; accents: #3b82f6 blue; secondary: #1f2937 gray). Use a global font like Inter (via Google Fonts in index.html).
+- Break the page into reusable components: Header, Hero, Clients, Features, Benefits, Team, Testimonials, Pricing, FAQ, Footer.
+- Navigation: Fixed top header with logo (text: "Najaf"), menu items (Home, Features, Pricing, Team, FAQ), and CTA button ("Get Started" – blue bg, white text, rounded-md, hover scale animation).
+- Footer: Simple bottom section with copyright, social icons (LinkedIn, Twitter, GitHub), and quick links.
+
+### Key Sections (in vertical scroll order):
+1. **Hero Section** (full-viewport height, pt-20 for header overlap):
+   - Background: Subtle gradient (from #0f0f23 to #1e3a8a) with an abstract AI-themed SVG pattern or blurred image overlay (use a placeholder AI neural network image from Unsplash).
+   - Content: Centered flex layout. Left: H1 headline ("Build AI Products Faster") in large bold font (text-5xl md:text-7xl, font-bold), subheadline (text-xl md:text-2xl, opacity-80), and 3-4 bullet points on benefits (e.g., "Seamless Design to Deployment"). Right: Mockup image or video embed of the product dashboard (use a placeholder responsive image with object-cover).
+   - CTA: Two buttons stacked – primary "Start Free Trial" (blue bg, full-width on mobile), secondary "Watch Demo" (outlined, gray border).
+   - Animation: Hero elements fade in on load; image scales in from bottom.
+
+2. **Clients Logos Section** (py-20 bg-gray-800):
+   - Grid of 6-8 grayscale client logos (e.g., placeholders for OpenAI, Google, AWS) in 2-3 rows, grayscale filter on hover to color. Use opacity-50 hover:opacity-100 transition.
+   - Centered text above: "Trusted by Leading AI Innovators".
+
+3. **Features Section** (py-20):
+   - H2 ("Powerful Features") centered, underlined with blue accent.
+   - 3-column grid (1-col on mobile) of feature cards: Each card has icon (React Icons, e.g., FaBrain), title (text-2xl bold), description (text-sm), and subtle border-radius shadow (bg-gray-800 rounded-xl p-6).
+   - Features: "AI-Powered Design", "Seamless Integration", "Real-Time Collaboration".
+   - Animation: Staggered slide-up on scroll.
+
+4. **Benefits Section** (py-20 bg-gray-800):
+   - H2 ("Why Choose Najaf?").
+   - Alternating layout: Odd rows left-text-right-image, even right-text-left-image. Text side: Bullet list of benefits (e.g., "10x Faster Development"). Image side: Illustrative icons or screenshots.
+   - 3-4 benefit blocks, responsive stack on mobile.
+
+5. **Team Section** (py-20):
+   - H2 ("Meet the Team").
+   - 4-member grid (1-2 cols responsive): Each card with circular avatar photo (placeholder images), name (text-xl bold), role (text-sm gray), short bio, and LinkedIn link button.
+   - Subtle hover lift animation.
+
+6. **Testimonials Section** (py-20 bg-gray-800):
+   - H2 ("What Our Users Say").
+   - Carousel or 3-column grid of quote cards: Quote text (italic), author name/role, star rating (5 stars), and avatar. Use a simple slider if needed (via react-slick, but keep minimal).
+   - Animation: Fade in quotes sequentially.
+
+7. **Pricing Section** (py-20):
+   - H2 ("Simple Pricing").
+   - 3 pricing cards in a row (stack on mobile): Basic/Free, Pro ($29/mo), Enterprise (Contact). Each: Tier name, price (large text), feature list (checkmarks), CTA button (disabled for free tier).
+   - Highlight Pro card with blue border and "Most Popular" badge.
+   - Toggle for monthly/annual via useState.
+
+8. **FAQ Section** (py-20):
+   - H2 ("Frequently Asked Questions").
+   - Accordion list (use useState for open/close): 4-5 questions (e.g., "What is Najaf?"), expandable content with smooth height transition.
+   - Styled as bordered items (bg-gray-800 rounded-lg).
+
+### General Styling and Interactions:
+- Typography: Headings Inter bold, body Inter regular; line-height 1.6; max-width 1200px container with mx-auto px-4.
+- Spacing: Consistent py-20 sections, internal p-8 for cards.
+- Responsiveness: Tailwind classes like md:grid-cols-3, flex-col md:flex-row.
+- Animations: Use Framer Motion's motion.div with variants for enter (y:50, opacity:0 to y:0, opacity:1), whileHover={{ scale: 1.05 }}.
+- Interactivity: Smooth scroll to sections on nav clicks; form in hero if applicable (simple email signup with useState).
+- Performance: Lazy load images with React.lazy; ensure <100ms load times.
+
+Generate the full code structure: Include all components as separate .jsx files, App.js routing/scroll, index.js setup, and a sample package.json with dependencies (react, react-dom, tailwindcss, framer-motion, react-icons, react-scroll). Provide placeholder content and images via URLs. Ensure the code is production-ready, accessible (ARIA labels), and matches the sleek, professional AI/SaaS aesthetic of the original Najaf template.
