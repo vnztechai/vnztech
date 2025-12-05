@@ -1,5 +1,6 @@
 import ScrollFloat from "./ScrollFloat";
 import { useState } from "react";
+import { loadStripe } from "@stripe/stripe-js";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -7,6 +8,59 @@ import { Check } from "lucide-react";
 
 export default function Pricing() {
   const [billingPeriod, setBillingPeriod] = useState<"monthly" | "annual">("monthly");
+
+  // Initialize Stripe Promise once. Make sure to define VITE_STRIPE_PUBLISHABLE_KEY
+  // in your `.env` (e.g. VITE_STRIPE_PUBLISHABLE_KEY=pk_test_...).
+  const publishableKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || "";
+  const stripePromise = loadStripe(publishableKey);
+
+  // DEBUG: log publishable key so you can verify Vite loaded the .env value.
+  // Remove this log after verifying — do not leak real keys in production.
+  if (typeof window !== "undefined") {
+    // use console.debug to make it easy to filter
+    console.debug("VITE_STRIPE_PUBLISHABLE_KEY:", publishableKey);
+  }
+
+  // Call the backend to create a Checkout Session then redirect to Stripe Checkout.
+  // Server endpoint: POST /create-checkout-session
+  // Body: { plan: string, billingPeriod: 'monthly'|'annual' }
+  // Response: { sessionId: string }
+  async function handleCheckout(planId: string) {
+    try {
+      // Enforce sandbox/test mode only: require a Stripe publishable key
+      // that starts with `pk_test_`.
+      if (!publishableKey || !publishableKey.startsWith("pk_test_")) {
+        alert(
+          "Sandbox mode only: set VITE_STRIPE_PUBLISHABLE_KEY to a Stripe test publishable key (pk_test_...) in your .env."
+        );
+        return;
+      }
+
+      const res = await fetch("/create-checkout-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ plan: planId, billingPeriod }),
+      });
+
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(text || "Failed to create checkout session");
+      }
+
+      const data = await res.json();
+      const sessionId = data.sessionId;
+      if (!sessionId) throw new Error("No sessionId returned from server");
+
+      const stripe = await stripePromise;
+      if (!stripe) throw new Error("Stripe failed to initialize");
+
+      const redirectResult = await (stripe as any).redirectToCheckout({ sessionId });
+      if (redirectResult && redirectResult.error) throw redirectResult.error;
+    } catch (err: any) {
+      console.error("Checkout error:", err);
+      alert(err?.message || "Could not start checkout. Check console for details.");
+    }
+  }
 
   const plans = [
     {
@@ -206,7 +260,7 @@ export default function Pricing() {
                   variant="default"
                   style={{ backgroundColor: "#735334", color: "#ffffff" }}
                   disabled={plans[1].disabled}
-                  onClick={() => console.log(`${plans[1].cta} clicked for ${plans[1].name}`)}
+                  onClick={() => handleCheckout("pro")}
                   data-testid="button-plan-cta-1"
                 >
                   {plans[1].cta}
@@ -254,7 +308,7 @@ export default function Pricing() {
                   className="cta-button w-full"
                   variant="outline"
                   disabled={plans[2].disabled}
-                  onClick={() => console.log(`${plans[2].cta} clicked for ${plans[2].name}`)}
+                  onClick={() => handleCheckout("enterprise")}
                   data-testid="button-plan-cta-2"
                 >
                   {plans[2].cta}
