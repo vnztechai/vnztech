@@ -7,23 +7,23 @@ export default function Testimonials() {
   const testimonials = [
     {
       quote: "Vnztech transformed how we monitor our assets. Real-time insights and predictive alerts have drastically reduced downtime and maintenance costs. Truly a game-changer for enterprise operations!",
-      author: "Samantha Lee",
+      author: "Samantha Lenords",
       role: "Operations Director",
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop",
+      avatar: "./images/13.png",
       rating: 5,
     },
     {
       quote: "Integrating Vnztech with our existing IoT devices was seamless. The platform’s AI-driven analytics give us full visibility and actionable intelligence on every asset.",
       author: " Rajiv Kumar",
       role: "Head of Asset Management",
-      avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop",
+      avatar: "./images/14.png",
       rating: 5,
     },
     {
       quote: "The scalability and security of Vnztech are unmatched. We can manage thousands of high-value assets globally with confidence, knowing our data is protected and always available.",
       author: "Elena Petrova",
       role: "CTO",
-      avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop",
+      avatar: "./images/15.png",
       rating: 5,
     },
   ];
@@ -219,7 +219,7 @@ export default function Testimonials() {
           left: 0;
           right: 0;
           height: 4px;
-          background: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--primary) / 0.5));
+          background: linear-gradient(90deg, #000000, #000000);
           transform: scaleX(0);
           transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
           transform-origin: left;

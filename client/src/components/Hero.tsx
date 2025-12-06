@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 import TextType from "./TextType";
 
-const heroImage = "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop&q=80";
+const heroImage = "./images/3.png";
 
 export default function Hero() {
   // const benefits = [
@@ -26,10 +26,6 @@ export default function Hero() {
     >
       {/* Animated background gradient */}
       <div className="" />
-      
-      {/* Floating orbs */}
-      <div className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-3xl animate-float" />
-      <div className="absolute bottom-20 right-10 w-96 h-96 bg-primary/30 rounded-full blur-3xl animate-float-delayed" />
       
       {/* Grid pattern overlay */}
       <div className="absolute inset-0 bg-grid-pattern opacity-5 -z-10" />
@@ -94,7 +90,7 @@ export default function Hero() {
             <div className="hero-cta flex flex-col sm:flex-row gap-4">
              <Button
   size="lg"
-  className="cta-button text-lg group relative overflow-hidden bg-[#735334] hover:bg-[#5c422a]"
+  className="cta-button text-lg group relative overflow-hidden bg-[#735334] hover:bg-[#5c422a] border-0"
   style={{ color: "#ffffff" }}
   onClick={() => scrollToSection("pricing")}
   data-testid="button-start-trial"
@@ -133,33 +129,29 @@ export default function Hero() {
 
           {/* Image section with unique floating card layout */}
           <div className="hero-image relative lg:mt-0">
-            {/* Decorative elements */}
-            <div className="absolute -top-8 -right-8 w-72 h-72 bg-primary/20 rounded-full blur-3xl animate-pulse" />
-            <div className="absolute -bottom-8 -left-8 w-64 h-64 bg-primary/30 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-            
             {/* Main image card */}
-            <div className="image-card relative bg-gradient-to-br from-background to-primary/5 p-2 rounded-2xl shadow-2xl backdrop-blur-sm border border-primary/10">
+            <div className=" ">
               <img
                 src={heroImage}
                 alt="AI Dashboard Product Mockup"
-                className="image-content relative rounded-xl w-full object-cover"
+                className="image-content relative rounded-2xl w-full object-cover h-[550px]"
                 data-testid="img-hero-mockup"
               />
               
               {/* Floating badges around image */}
-              <div className="floating-badge absolute -top-6 -left-6 bg-background border border-border rounded-xl px-4 py-3 shadow-lg">
+              {/* <div className="floating-badge absolute -top-6 -left-6 bg-background border border-border rounded-xl px-4 py-3 shadow-lg">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse" />
                   <span className="text-sm font-medium">Live</span>
                 </div>
-              </div>
+              </div> */}
               
-              <div className="floating-badge absolute -bottom-6 -right-6 bg-background border border-border rounded-xl px-4 py-3 shadow-lg">
+              {/* <div className="floating-badge absolute -bottom-6 -right-6 bg-background border border-border rounded-xl px-4 py-3 shadow-lg">
                 <div className="text-sm">
                   <div className="font-bold text-primary">+127%</div>
                   <div className="text-muted-foreground text-xs">Performance</div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -252,6 +244,15 @@ export default function Hero() {
           }
           50% {
             transform: translateY(-10px) rotate(2deg);
+          }
+        }
+
+        @keyframes bounce {
+          0%, 100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-20px);
           }
         }
 
@@ -355,6 +356,7 @@ export default function Hero() {
         }
 
         .image-content {
+          animation: bounce 3s ease-in-out 2s infinite;
           transition: all 0.5s ease;
         }
 

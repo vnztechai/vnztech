@@ -58,9 +58,7 @@ export default function Footer() {
           {/* Brand section - spans more columns */}
           <div className="md:col-span-5 footer-brand">
             <div className="mb-6">
-              <h3 className="footer-logo text-3xl font-bold text-primary mb-4 inline-block" data-testid="text-footer-logo">
-                Najaf
-              </h3>
+              <img src="./images/1.svg" alt="Najaf Logo" className="h-28 w-auto" />
             </div>
             <p className="footer-tagline text-muted-foreground text-lg leading-relaxed" data-testid="text-footer-tagline">
               Building the next generation of smart asset management platforms with AI precision and real-time control
@@ -96,44 +94,90 @@ export default function Footer() {
               Follow Us
               <span className="heading-underline absolute -bottom-2 left-0 h-0.5 w-0 bg-black transition-all duration-500" />
             </h4>
-            <div className="flex gap-3 mb-6">
-              <Button
-                variant="outline"
-                size="icon"
-                className="social-icon hover:scale-110 transition-all duration-300"
-                onClick={() => console.log("LinkedIn clicked")}
-                data-testid="button-social-linkedin"
-              >
-                <Linkedin className="h-4 w-4" />
-              </Button>
-              <Button
-                variant="outline"
-                size="icon"
-                className="social-icon hover:scale-110 transition-all duration-300"
-                onClick={() => console.log("Twitter clicked")}
-                data-testid="button-social-twitter"
-              >
-                <Twitter className="h-4 w-4" />
-              </Button>
-              
-               <Button
-                variant="outline"
-                size="icon"
-                className="social-icon hover:scale-110 transition-all duration-300"
-                onClick={() => console.log("GitHub clicked")}
-                data-testid="button-social-github"
-              >
-                <Youtube className="h-4 w-4" />
-              </Button>
-               <Button
-                variant="outline"
-                size="icon"
-                className="social-icon hover:scale-110 transition-all duration-300"
-                onClick={() => console.log("GitHub clicked")}
-                data-testid="button-social-github"
-              >
-                <Facebook className="h-4 w-4" />
-              </Button>
+            <div className="flex gap-3 mb-6 flex-wrap">
+              <a href="https://www.linkedin.com/company/vnztech/" target="_blank" rel="noopener noreferrer">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="social-icon hover:scale-110 transition-all duration-300"
+                  onClick={() => console.log("LinkedIn clicked")}
+                  data-testid="button-social-linkedin"
+                >
+                  <Linkedin className="h-4 w-4" />
+                </Button>
+              </a>
+
+              <a href="https://x.com/vnztech" target="_blank" rel="noopener noreferrer">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="social-icon hover:scale-110 transition-all duration-300"
+                  onClick={() => console.log("Twitter clicked")}
+                  data-testid="button-social-twitter"
+                >
+                  <Twitter className="h-4 w-4" />
+                </Button>
+              </a>
+
+              <a href="https://www.youtube.com/@Vnztech_ai" target="_blank" rel="noopener noreferrer">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="social-icon hover:scale-110 transition-all duration-300"
+                  onClick={() => console.log("YouTube clicked")}
+                  data-testid="button-social-youtube"
+                >
+                  <Youtube className="h-4 w-4" />
+                </Button>
+              </a>
+
+              <a href="https://www.facebook.com/VNZTech/" target="_blank" rel="noopener noreferrer">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="social-icon hover:scale-110 transition-all duration-300"
+                  onClick={() => console.log("Facebook clicked")}
+                  data-testid="button-social-facebook"
+                >
+                  <Facebook className="h-4 w-4" />
+                </Button>
+              </a>
+
+              <a href="https://www.f6s.com/vnztech" target="_blank" rel="noopener noreferrer">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="social-icon hover:scale-110 transition-all duration-300"
+                  onClick={() => console.log("Social 1 clicked")}
+                  data-testid="button-social-custom1"
+                >
+                  <img src="./images/20.svg" alt="Social Icon 1" className="h-6 w-6" />
+                </Button>
+              </a>
+
+              <a href="https://www.crunchbase.com/organization/vnztech" target="_blank" rel="noopener noreferrer">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="social-icon hover:scale-110 transition-all duration-300"
+                  onClick={() => console.log("Social 2 clicked")}
+                  data-testid="button-social-custom2"
+                >
+                  <img src="./images/21.svg" alt="Social Icon 2" className="h-6 w-6" />
+                </Button>
+              </a>
+
+              <a href="https://www.pinterest.com/vnztech/" target="_blank" rel="noopener noreferrer">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="social-icon hover:scale-110 transition-all duration-300"
+                  onClick={() => console.log("Social 3 clicked")}
+                  data-testid="button-social-custom3"
+                >
+                  <img src="./images/22.svg" alt="Social Icon 3" className="h-6 w-6" />
+                </Button>
+              </a>
             </div>
 
             
@@ -153,7 +197,7 @@ export default function Footer() {
         <div className="footer-bottom pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="footer-copyright text-muted-foreground text-sm" data-testid="text-footer-copyright">
-              © {new Date().getFullYear()} Najaf. All rights reserved.
+              © {new Date().getFullYear()} Vnztech. All rights reserved.
             </p>
             <div className="footer-legal flex gap-6 text-sm text-muted-foreground">
               <a

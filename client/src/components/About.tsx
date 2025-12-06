@@ -30,19 +30,19 @@ export default function About() {
     {
       name: "Justin Timberland ",
       role: "FOUNDER & CEO",
-      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop",
+      image: "./images/19.png",
       bio: "Experience in The Field in 12 years",
     },
     {
       name: "Tony Edwardson",
       role: "CTO",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop",
+      image: "./images/18.png",
       bio: "Former lead engineer at major tech companies",
     },
     {
       name: "Anna Hatherway",
       role: "COO",
-      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop",
+      image: "./images/17.png",
       bio: "In Operation more than 8+ years",
     },
   ];
@@ -124,11 +124,11 @@ export default function About() {
               </Button>
             </div>
             <div className="story-image relative">
-              <div className="image-wrapper relative overflow-hidden rounded-2xl shadow-2xl">
+              <div className="">
                 <img
-                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=600&fit=crop"
+                  src="./images/16.png"
                   alt="Team collaboration"
-                  className="w-full h-auto object-cover"
+                  className="story-image-content w-full h-auto object-cover"
                 />
                 <div className="image-overlay absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-0 transition-opacity duration-500" />
               </div>
@@ -149,7 +149,7 @@ export default function About() {
     >
       Our Values
     </ScrollFloat>
-    <p style={{ color: "#000000" }}>The principles that drive every decision we make in building smarter, safer, and more efficient asset management solutions.</p>
+    <p style={{ color: "#000000" }}>The principles that drive every decision we make in building smarter, <br/>safer, and more efficient asset management solutions.</p>
   </div>
   <div className="grid md:grid-cols-3 gap-8">
     {values.map((value, index) => {
@@ -275,6 +275,15 @@ export default function About() {
           }
         }
 
+        @keyframes bounce {
+          0%, 100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-20px);
+          }
+        }
+
         .about-header {
           animation: fadeInUp 0.8s ease-out;
         }
@@ -289,6 +298,15 @@ export default function About() {
 
         .story-image {
           animation: slideInRight 0.8s ease-out 0.4s both;
+        }
+
+        .story-image-wrapper {
+          animation: scaleIn 0.6s ease-out 0.5s both;
+        }
+
+        .story-image-content {
+          animation: bounce 3s ease-in-out 2s infinite;
+          transition: all 0.5s ease;
         }
 
         .story-cta {

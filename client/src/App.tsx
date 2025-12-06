@@ -10,15 +10,17 @@ import NotFound from "@/pages/not-found";
 import CookiesBanner from "@/components/CookiesBanner";
 import PrivacyPolicy from "@/pages/Privacy";
 import TermsAndConditions from "@/pages/Terms";
+import CheckoutSandbox from "@/pages/Checkout";
 
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={Home} />
-      <Route path="/about" component={AboutPage} />
-      <Route path="/contact" component={ContactPage} />
-      <Route path="/privacy" component={PrivacyPolicy} />
-      <Route path="/terms" component={TermsAndConditions} />
+      <Route path='/' component={Home} />
+      <Route path='/about' component={AboutPage} />
+      <Route path='/contact' component={ContactPage} />
+      <Route path='/privacy' component={PrivacyPolicy} />
+      <Route path='/terms' component={TermsAndConditions} />
+      <Route path='/checkout' component={CheckoutSandbox} />
       <Route component={NotFound} />
     </Switch>
   );

@@ -383,7 +383,7 @@ export default function Contact() {
                   size="lg"
                   disabled={isSubmitting}
                   onClick={handleSubmit}
-                  className="submit-button w-full text-lg group relative overflow-hidden"
+                  className="submit-button w-full text-lg group relative overflow-hidden border-0"
                   style={{ backgroundColor: "#735334" }}
                   data-testid="button-contact-submit"
                 >
@@ -513,6 +513,12 @@ export default function Contact() {
         .submit-button {
           animation: fadeInUp 0.6s ease-out 0.9s both;
           transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .submit-button:focus {
+          outline: none;
+          ring: 2px solid #000000;
+          ring-offset: 2px;
         }
 
         .submit-button:hover:not(:disabled) {
