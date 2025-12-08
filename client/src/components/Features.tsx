@@ -82,18 +82,10 @@ export default function Features() {
   const imageDarkOverlayColor = "";
 
   return (
-    <section
-      id="features"
-      className="py-20 relative overflow-hidden"
-      data-testid="section-features"
-    >
+    <section id="features" className="py-20 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16">
-          <h2
-            className="text-4xl md:text-5xl font-bold mb-4"
-            data-testid="text-features-title"
-            style={{ color: "#282728" }}
-          >
+          <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: "#282728" }}>
             Smart Performances
           </h2>
         </div>
@@ -103,24 +95,29 @@ export default function Features() {
             <div
               key={index}
               ref={(el) => (featureRefs.current[index] = el!)}
-              className={`feature-row-container slide-hidden delay-${
-                index + 1
-              } group flex flex-col lg:flex-row rounded-2xl shadow-xl overflow-hidden transition-all duration-400 ease-in-out ${
-                cardBackgroundColor
-              } ${
-                index % 2 === 0
-                  ? "lg:flex-row "
-                  : "lg:flex-row-reverse"
-              } mb-12 lg:mb-16`}
-              data-testid={`row-${index}`}
+              className={`
+                feature-row-container slide-hidden delay-${index + 1}
+                group flex flex-col lg:flex-row
+                rounded-2xl shadow-xl overflow-hidden
+                ${cardBackgroundColor}
+                transition-all duration-400 ease-in-out
+                ${index % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"}
+                mb-12 lg:mb-16
+              `}
             >
-              <div className="max-w-[66%] flex-shrink-0">
+              {/* TEXT CONTENT - NO GAP */}
+              <div className="w-full lg:w-2/3 relative z-20 p-0">
                 {renderFeatureCard(feature, index)}
               </div>
 
-              <div className={`bg-center w-full lg:w-1/3 lg:absolute lg:top-0 lg:bottom-0 ${
-                index % 2 === 0 ? "lg:right-0" : "lg:left-0"
-              }`}>
+              {/* IMAGE CONTENT - ORIGINAL LOGIC PRESERVED */}
+              <div
+                className={`bg-center w-full lg:w-1/3
+                h-[240px] sm:h-[300px] lg:h-full
+                lg:absolute lg:top-0 lg:bottom-0
+                ${index % 2 === 0 ? "lg:right-0" : "lg:left-0"}
+                relative z-10`}
+              >
                 {renderImage(feature, index, imageDarkOverlayColor)}
               </div>
             </div>
@@ -129,24 +126,6 @@ export default function Features() {
       </div>
 
       <style>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-20px); }
-        }
-
-        @keyframes scaleIn {
-          0% { transform: scale(0.8); opacity: 0; }
-          100% { transform: scale(1); opacity: 1; }
-        }
-
-        .feature-card {
-          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-          animation: scaleIn 0.6s forwards;
-          position: relative;
-          overflow: hidden;
-        }
-
-        /* === Scroll Animation === */
         .slide-hidden {
           opacity: 0;
           transform: translateY(60px);
@@ -156,29 +135,14 @@ export default function Features() {
           opacity: 1 !important;
           transform: translateY(0px) !important;
         }
-
-        @media (prefers-reduced-motion: reduce) {
-          .slide-hidden,
-          .animate-slide-in {
-            transition: none;
-            transform: none;
-          }
-        }
       `}</style>
     </section>
   );
 
-  function renderImage(
-    feature: Feature,
-    index: number,
-    imgOverlayColor: string
-  ) {
+  function renderImage(feature: Feature, index: number, overlay: string) {
     return (
-      <div
-        className="w-full h-full min-h-[150px] md:min-h-[250px] lg:min-h-full flex-shrink-0 relative overflow-hidden"
-        data-testid={`image-section-${index}`}
-      >
-        <div className={`absolute inset-0 ${imgOverlayColor}`}>
+      <div className="w-full h-full relative overflow-hidden">
+        <div className={`absolute inset-0 ${overlay}`}>
           <img
             src={feature.imageSrc}
             alt={feature.title}
@@ -193,32 +157,15 @@ export default function Features() {
     const Icon = feature.icon;
 
     return (
-      <div
-        className={`feature-card delay-${index + 1} relative group/card h-full`}
-        data-testid={`card-feature-${index}`}
-      >
-        <div className="relative bg-white/50 dark:bg-gray-900/50 rounded-2xl p-8 backdrop-blur-sm h-full">
+      <div className={`feature-card delay-${index + 1} h-full`}>
+        <div className="bg-white/50 dark:bg-gray-900/50 rounded-2xl p-6 md:p-8 backdrop-blur-sm">
           <div className="flex items-start gap-6 mb-6">
-            <div className="w-16 h-16 rounded-xl flex items-center justify-center bg-black text-white">
+            <div className="w-16 h-16 rounded-xl bg-black text-white flex items-center justify-center">
               <Icon className="h-8 w-8" />
             </div>
-
-            <div className="flex-1 pt-2">
-              <h3
-                className="text-2xl font-semibold mb-3"
-                data-testid={`text-feature-title-${index}`}
-              >
-                {feature.title}
-              </h3>
-            </div>
+            <h3 className="text-2xl font-semibold">{feature.title}</h3>
           </div>
-
-          <p
-            className="text-base leading-relaxed"
-            data-testid={`text-feature-description-${index}`}
-          >
-            {feature.description}
-          </p>
+          <p className="text-base leading-relaxed">{feature.description}</p>
         </div>
       </div>
     );
