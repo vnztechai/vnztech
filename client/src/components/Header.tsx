@@ -1,12 +1,37 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>("hero");
 
   const [location, setLocation] = useLocation();
+
+  // Track active section on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ["hero", "features", "pricing", "faq", "about", "contact"];
+      let currentSection = "hero";
+
+      for (const sectionId of sections) {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          // If section is in viewport (top half), mark it as active
+          if (rect.top <= window.innerHeight / 2) {
+            currentSection = sectionId;
+          }
+        }
+      }
+
+      setActiveSection(currentSection);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -45,6 +70,9 @@ export default function Header() {
               <Button
                 key={item.id ?? item.path}
                 variant="ghost"
+                className={`relative transition-all duration-300 ${
+                  activeSection === item.id ? "text-[#000000]" : ""
+                }`}
                 onClick={() => {
                   if (item.path) {
                     // If we're on the home page, prefer scrolling to the section.
@@ -67,6 +95,9 @@ export default function Header() {
                 data-testid={`link-${item.id ?? item.path}`}
               >
                 {item.label}
+                {activeSection === item.id && (
+                  <span className="nav-underline absolute bottom-0 left-0 right-0 h-0.5 bg-black animate-expandWidth" />
+                )}
               </Button>
             ))}
           </nav>
@@ -136,3 +167,22 @@ export default function Header() {
     </header>
   );
 }
+
+<style>{`
+  @keyframes expandWidth {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+
+  .animate-expandWidth {
+    animation: expandWidth 0.3s ease-out forwards;
+  }
+
+  .nav-underline {
+    margin-top: 4px;
+  }
+`}</style>

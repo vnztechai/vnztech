@@ -49,7 +49,7 @@ export default function Hero() {
     as="span"
     className="mr-2 text-[#3c3c3d]" // Applied #3c3c3d
     text={["Accelerate Intelligent"]}
-    typingSpeed={75}
+    typingSpeed={175}
     pauseDuration={1500}
     showCursor={false}
     startOnVisible={true}
@@ -59,7 +59,7 @@ export default function Hero() {
     as="span"
     className="text-[#735334]" // Applied #735334
     text={["Innovation"]}
-    typingSpeed={75}
+    typingSpeed={175}
     pauseDuration={1500}
     showCursor={true}
     cursorCharacter="|"
