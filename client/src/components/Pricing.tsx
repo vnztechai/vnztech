@@ -1,66 +1,25 @@
 import ScrollFloat from "./ScrollFloat";
 import { useState } from "react";
-import { loadStripe } from "@stripe/stripe-js";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Link } from "wouter";
 import { Badge } from "@/components/ui/badge";
 import { Check } from "lucide-react";
 
 export default function Pricing() {
-  const [billingPeriod, setBillingPeriod] = useState<"monthly" | "annual">("monthly");
+  const [billingPeriod, setBillingPeriod] = useState<"monthly" | "annual">(
+    "monthly"
+  );
 
-  // Initialize Stripe Promise once. Make sure to define VITE_STRIPE_PUBLISHABLE_KEY
-  // in your `.env` (e.g. VITE_STRIPE_PUBLISHABLE_KEY=pk_test_...).
-  const publishableKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || "";
-  const stripePromise = loadStripe(publishableKey);
-
-  // DEBUG: log publishable key so you can verify Vite loaded the .env value.
-  // Remove this log after verifying — do not leak real keys in production.
-  if (typeof window !== "undefined") {
-    // use console.debug to make it easy to filter
-    console.debug("VITE_STRIPE_PUBLISHABLE_KEY:", publishableKey);
-  }
-
-  // Call the backend to create a Checkout Session then redirect to Stripe Checkout.
-  // Server endpoint: POST /create-checkout-session
-  // Body: { plan: string, billingPeriod: 'monthly'|'annual' }
-  // Response: { sessionId: string }
-  async function handleCheckout(planId: string) {
-    try {
-      // Enforce sandbox/test mode only: require a Stripe publishable key
-      // that starts with `pk_test_`.
-      if (!publishableKey || !publishableKey.startsWith("pk_test_")) {
-        alert(
-          "Sandbox mode only: set VITE_STRIPE_PUBLISHABLE_KEY to a Stripe test publishable key (pk_test_...) in your .env."
-        );
-        return;
-      }
-
-      const res = await fetch("/create-checkout-session", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plan: planId, billingPeriod }),
-      });
-
-      if (!res.ok) {
-        const text = await res.text();
-        throw new Error(text || "Failed to create checkout session");
-      }
-
-      const data = await res.json();
-      const sessionId = data.sessionId;
-      if (!sessionId) throw new Error("No sessionId returned from server");
-
-      const stripe = await stripePromise;
-      if (!stripe) throw new Error("Stripe failed to initialize");
-
-      const redirectResult = await (stripe as any).redirectToCheckout({ sessionId });
-      if (redirectResult && redirectResult.error) throw redirectResult.error;
-    } catch (err: any) {
-      console.error("Checkout error:", err);
-      alert(err?.message || "Could not start checkout. Check console for details.");
-    }
-  }
+  // Pricing component now routes to the /checkout sandbox page instead of
+  // calling Stripe directly. All embedded Stripe Elements live on /checkout.
 
   const plans = [
     {
@@ -112,206 +71,267 @@ export default function Pricing() {
   ];
 
   return (
-    <section id="pricing" className="py-20 relative overflow-hidden" data-testid="section-pricing">
+    <section
+      id='pricing'
+      className='py-20 relative overflow-hidden'
+      data-testid='section-pricing'
+    >
       {/* Background decoration */}
-      <div className="absolute inset-0 pointer-events-none opacity-20">
-        <div className="absolute top-1/4 left-10 w-64 h-64 bg-primary/30 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/4 right-10 w-80 h-80 bg-primary/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+      <div className='absolute inset-0 pointer-events-none opacity-20'>
+        <div className='absolute top-1/4 left-10 w-64 h-64 bg-primary/30 rounded-full blur-3xl animate-pulse' />
+        <div
+          className='absolute bottom-1/4 right-10 w-80 h-80 bg-primary/20 rounded-full blur-3xl animate-pulse'
+          style={{ animationDelay: "1s" }}
+        />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-16" style={{ color: "#353332" }}>
+      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
+        <div className='text-center mb-16' style={{ color: "#353332" }}>
           <ScrollFloat
-            containerClassName="text-center mb-4"
-            textClassName="pricing-title text-4xl md:text-5xl font-bold"
-            ease="back.inOut(2)"
-            scrollStart="top center+=30%"
-            scrollEnd="center center"
+            containerClassName='text-center mb-4'
+            textClassName='pricing-title text-4xl md:text-5xl font-bold'
+            ease='back.inOut(2)'
+            scrollStart='top center+=30%'
+            scrollEnd='center center'
             stagger={0.03}
           >
             Simple Pricing
           </ScrollFloat>
-          
-          <div className="billing-toggle inline-flex items-center gap-4 bg-[#735334]/50 p-1 rounded-lg">
+
+          <div className='billing-toggle inline-flex items-center gap-4 bg-[#735334]/50 p-1 rounded-lg'>
             <Button
               variant={billingPeriod === "monthly" ? "default" : "ghost"}
               onClick={() => setBillingPeriod("monthly")}
-              data-testid="button-billing-monthly"
-              className="transition-all duration-300"
-              style={{ backgroundColor: billingPeriod === "monthly" ? "#735334" : "transparent", color: "#000000" }}
+              data-testid='button-billing-monthly'
+              className='transition-all duration-300'
+              style={{
+                backgroundColor:
+                  billingPeriod === "monthly" ? "#735334" : "transparent",
+                color: "#000000",
+              }}
             >
               Monthly
             </Button>
             <Button
               variant={billingPeriod === "annual" ? "default" : "ghost"}
               onClick={() => setBillingPeriod("annual")}
-              data-testid="button-billing-annual"
-              className="transition-all duration-300"
-              style={{ backgroundColor: billingPeriod === "annual" ? "#735334" : "transparent", color: "#000000" }}
+              data-testid='button-billing-annual'
+              className='transition-all duration-300'
+              style={{
+                backgroundColor:
+                  billingPeriod === "annual" ? "#735334" : "transparent",
+                color: "#000000",
+              }}
             >
               Annual
-              <Badge variant="secondary" className="ml-2 badge-save">Save 17%</Badge>
+              <Badge variant='secondary' className='ml-2 badge-save'>
+                Save 17%
+              </Badge>
             </Button>
           </div>
         </div>
 
         {/* Unique staggered vertical layout */}
-        <div className="flex flex-col lg:flex-row gap-8 items-center lg:items-stretch justify-center">
+        <div className='flex flex-col lg:flex-row gap-8 items-center lg:items-stretch justify-center'>
           {/* Free Plan - Smaller, positioned lower */}
-          <div className="pricing-card-wrapper w-full max-w-sm lg:max-w-xs lg:mt-12 delay-1">
+          <div className='pricing-card-wrapper w-full max-w-sm lg:max-w-xs lg:mt-12 delay-1'>
             <Card
-              className="pricing-card h-full transition-all duration-500 relative overflow-hidden group"
+              className='pricing-card h-full transition-all duration-500 relative overflow-hidden group'
               style={{ backgroundColor: "#b9a592" }}
-              data-testid="card-pricing-0"
+              data-testid='card-pricing-0'
             >
-              <div className="card-glow absolute inset-0 via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              
-              <CardHeader className="relative z-10">
-                <CardTitle className="plan-name text-2xl" data-testid="text-plan-name-0">
+              <div className='card-glow absolute inset-0 via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500' />
+
+              <CardHeader className='relative z-10'>
+                <CardTitle
+                  className='plan-name text-2xl'
+                  data-testid='text-plan-name-0'
+                >
                   {plans[0].name}
                 </CardTitle>
-                <CardDescription className="plan-description" data-testid="text-plan-description-0">
+                <CardDescription
+                  className='plan-description'
+                  data-testid='text-plan-description-0'
+                >
                   {plans[0].description}
                 </CardDescription>
-                <div className="mt-4">
-                  <div className="flex items-baseline gap-2">
-                    <span className="plan-price text-5xl font-bold" data-testid="text-plan-price-0">
+                <div className='mt-4'>
+                  <div className='flex items-baseline gap-2'>
+                    <span
+                      className='plan-price text-5xl font-bold'
+                      data-testid='text-plan-price-0'
+                    >
                       ${plans[0].price[billingPeriod]}
                     </span>
-                    <span className="text-[#000000]">
+                    <span className='text-[#000000]'>
                       /{billingPeriod === "monthly" ? "mo" : "yr"}
                     </span>
                   </div>
                 </div>
               </CardHeader>
-              <CardContent className="relative z-10">
-                <ul className="space-y-3">
+              <CardContent className='relative z-10'>
+                <ul className='space-y-3'>
                   {plans[0].features.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="feature-item flex items-center gap-3" data-testid={`text-plan-feature-0-${featureIndex}`}>
-                      <div className="check-wrapper bg-[#7e6044] rounded-full p-1 flex-shrink-0">
-                        <Check className="check-icon h-3 w-3 text-[#000000]" />
+                    <li
+                      key={featureIndex}
+                      className='feature-item flex items-center gap-3'
+                      data-testid={`text-plan-feature-0-${featureIndex}`}
+                    >
+                      <div className='check-wrapper bg-[#7e6044] rounded-full p-1 flex-shrink-0'>
+                        <Check className='check-icon h-3 w-3 text-[#000000]' />
                       </div>
-                      <span className="text-sm">{feature}</span>
+                      <span className='text-sm'>{feature}</span>
                     </li>
                   ))}
                 </ul>
               </CardContent>
-              <CardFooter className="relative z-10">
-                <Button
-                  className="cta-button w-full"
-                  variant="outline"
-                  onClick={() => handleCheckout("free")}
-                  data-testid="button-plan-cta-0"
-                >
-                  {plans[0].cta}
-                </Button>
+              <CardFooter className='relative z-10'>
+                <Link href={`/checkout?plan=pro&billing=${billingPeriod}`}>
+                  <Button
+                    className='cta-button w-full'
+                    variant='default'
+                    style={{ backgroundColor: "#735334", color: "#ffffff" }}
+                    disabled={plans[0].disabled}
+                    data-testid='button-plan-cta-0'
+                  >
+                    {plans[0].cta}
+                  </Button>
+                </Link>
               </CardFooter>
             </Card>
           </div>
 
           {/* Pro Plan - Larger, elevated (Popular) */}
-          <div className="pricing-card-wrapper w-full max-w-sm lg:max-w-md delay-2">
+          <div className='pricing-card-wrapper w-full max-w-sm lg:max-w-md delay-2'>
             <Card
-              className="pricing-card pricing-card-popular h-full transition-all duration-500 relative overflow-hidden group border-[#000000] border-2 shadow-xl"
+              className='pricing-card pricing-card-popular h-full transition-all duration-500 relative overflow-hidden group border-[#000000] border-2 shadow-xl'
               style={{ backgroundColor: "#c8b9aa" }}
-              data-testid="card-pricing-1"
+              data-testid='card-pricing-1'
             >
               {/* <Badge className="popular-badge absolute -top-3 left-1/2 -translate-x-1/2" data-testid="badge-most-popular">
                 Most Popular
               </Badge> */}
-              
-              <div className="card-glow absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="card-shine absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-              
-              <CardHeader className="relative z-10">
-                <CardTitle className="plan-name text-3xl" data-testid="text-plan-name-1">
+
+              <div className='card-glow absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500' />
+              <div className='card-shine absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700' />
+
+              <CardHeader className='relative z-10'>
+                <CardTitle
+                  className='plan-name text-3xl'
+                  data-testid='text-plan-name-1'
+                >
                   {plans[1].name}
                 </CardTitle>
-                <CardDescription className="plan-description" data-testid="text-plan-description-1">
+                <CardDescription
+                  className='plan-description'
+                  data-testid='text-plan-description-1'
+                >
                   {plans[1].description}
                 </CardDescription>
-                <div className="mt-4">
-                  <div className="flex items-baseline gap-2">
-                    <span className="plan-price text-6xl font-bold" data-testid="text-plan-price-1">
+                <div className='mt-4'>
+                  <div className='flex items-baseline gap-2'>
+                    <span
+                      className='plan-price text-6xl font-bold'
+                      data-testid='text-plan-price-1'
+                    >
                       ${plans[1].price[billingPeriod]}
                     </span>
-                    <span className="text-[#000000]">
+                    <span className='text-[#000000]'>
                       /{billingPeriod === "monthly" ? "mo" : "yr"}
                     </span>
                   </div>
                 </div>
               </CardHeader>
-              <CardContent className="relative z-10">
-                <ul className="space-y-3">
+              <CardContent className='relative z-10'>
+                <ul className='space-y-3'>
                   {plans[1].features.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="feature-item flex items-center gap-3" data-testid={`text-plan-feature-1-${featureIndex}`}>
-                      <div className="check-wrapper bg-[#7e6044] rounded-full p-1 flex-shrink-0">
-                        <Check className="check-icon h-3 w-3 text-[#000000]" />
+                    <li
+                      key={featureIndex}
+                      className='feature-item flex items-center gap-3'
+                      data-testid={`text-plan-feature-1-${featureIndex}`}
+                    >
+                      <div className='check-wrapper bg-[#7e6044] rounded-full p-1 flex-shrink-0'>
+                        <Check className='check-icon h-3 w-3 text-[#000000]' />
                       </div>
-                      <span className="text-sm">{feature}</span>
+                      <span className='text-sm'>{feature}</span>
                     </li>
                   ))}
                 </ul>
               </CardContent>
-              <CardFooter className="relative z-10">
-                <Button
-                  className="cta-button w-full"
-                  variant="default"
-                  style={{ backgroundColor: "#735334", color: "#ffffff" }}
-                  disabled={plans[1].disabled}
-                  onClick={() => handleCheckout("pro")}
-                  data-testid="button-plan-cta-1"
-                >
-                  {plans[1].cta}
-                </Button>
+              <CardFooter className='relative z-10'>
+                <Link href={`/checkout?plan=pro&billing=${billingPeriod}`}>
+                  <Button
+                    className='cta-button w-full'
+                    variant='default'
+                    style={{ backgroundColor: "#735334", color: "#ffffff" }}
+                    disabled={plans[1].disabled}
+                    data-testid='button-plan-cta-1'
+                  >
+                    {plans[1].cta}
+                  </Button>
+                </Link>
               </CardFooter>
             </Card>
           </div>
 
           {/* Enterprise Plan - Smaller, positioned lower */}
-          <div className="pricing-card-wrapper w-full max-w-sm lg:max-w-xs lg:mt-12 delay-3">
+          <div className='pricing-card-wrapper w-full max-w-sm lg:max-w-xs lg:mt-12 delay-3'>
             <Card
-              className="pricing-card h-full transition-all duration-500 relative overflow-hidden group"
+              className='pricing-card h-full transition-all duration-500 relative overflow-hidden group'
               style={{ backgroundColor: "#b9a592" }}
-              data-testid="card-pricing-2"
+              data-testid='card-pricing-2'
             >
-              <div className="card-glow absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              
-              <CardHeader className="relative z-10">
-                <CardTitle className="plan-name text-2xl" data-testid="text-plan-name-2">
+              <div className='card-glow absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500' />
+
+              <CardHeader className='relative z-10'>
+                <CardTitle
+                  className='plan-name text-2xl'
+                  data-testid='text-plan-name-2'
+                >
                   {plans[2].name}
                 </CardTitle>
-                <CardDescription className="plan-description" data-testid="text-plan-description-2">
+                <CardDescription
+                  className='plan-description'
+                  data-testid='text-plan-description-2'
+                >
                   {plans[2].description}
                 </CardDescription>
-                <div className="mt-4">
-                  <span className="plan-price text-3xl font-bold" data-testid="text-plan-price-2">
+                <div className='mt-4'>
+                  <span
+                    className='plan-price text-3xl font-bold'
+                    data-testid='text-plan-price-2'
+                  >
                     Custom
                   </span>
                 </div>
               </CardHeader>
-              <CardContent className="relative z-10">
-                <ul className="space-y-3">
+              <CardContent className='relative z-10'>
+                <ul className='space-y-3'>
                   {plans[2].features.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="feature-item flex items-center gap-3" data-testid={`text-plan-feature-2-${featureIndex}`}>
-                      <div className="check-wrapper bg-[#7e6044] rounded-full p-1 flex-shrink-0">
-                        <Check className="check-icon h-3 w-3 text-[#000000]" />
+                    <li
+                      key={featureIndex}
+                      className='feature-item flex items-center gap-3'
+                      data-testid={`text-plan-feature-2-${featureIndex}`}
+                    >
+                      <div className='check-wrapper bg-[#7e6044] rounded-full p-1 flex-shrink-0'>
+                        <Check className='check-icon h-3 w-3 text-[#000000]' />
                       </div>
-                      <span className="text-sm">{feature}</span>
+                      <span className='text-sm'>{feature}</span>
                     </li>
                   ))}
                 </ul>
               </CardContent>
-              <CardFooter className="relative z-10">
-                <Button
-                  className="cta-button w-full"
-                  variant="outline"
-                  disabled={plans[2].disabled}
-                  onClick={() => handleCheckout("enterprise")}
-                  data-testid="button-plan-cta-2"
-                >
-                  {plans[2].cta}
-                </Button>
+              <CardFooter className='relative z-10'>
+                <Link href={`/contact`}>
+                  <Button
+                    className='cta-button w-full'
+                    variant='outline'
+                    disabled={plans[2].disabled}
+                    data-testid='button-plan-cta-2'
+                  >
+                    {plans[2].cta}
+                  </Button>
+                </Link>
               </CardFooter>
             </Card>
           </div>
