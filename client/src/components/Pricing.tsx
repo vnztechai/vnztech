@@ -193,6 +193,7 @@ export default function Pricing() {
                     style={{ backgroundColor: "#735334", color: "#ffffff" }}
                     disabled={plans[0].disabled}
                     data-testid='button-plan-cta-0'
+                    onClick={() => window.scrollTo({ top: 0, behavior: "auto" })}
                   >
                     {plans[0].cta}
                   </Button>
@@ -266,6 +267,7 @@ export default function Pricing() {
                     style={{ backgroundColor: "#735334", color: "#ffffff" }}
                     disabled={plans[1].disabled}
                     data-testid='button-plan-cta-1'
+                    onClick={() => window.scrollTo({ top: 0, behavior: "auto" })}
                   >
                     {plans[1].cta}
                   </Button>
@@ -322,16 +324,29 @@ export default function Pricing() {
                 </ul>
               </CardContent>
               <CardFooter className='relative z-10'>
-                <Link href={`/contact`}>
-                  <Button
-                    className='cta-button w-full'
-                    variant='outline'
-                    disabled={plans[2].disabled}
-                    data-testid='button-plan-cta-2'
-                  >
-                    {plans[2].cta}
-                  </Button>
-                </Link>
+                <Button
+                  className='cta-button w-full'
+                  variant='outline'
+                  disabled={plans[2].disabled}
+                  data-testid='button-plan-cta-2'
+                  onClick={() => {
+                    const el = document.getElementById("contact");
+                    if (el) {
+                      el.scrollIntoView({ behavior: "smooth", block: "start" });
+                      try {
+                        // Move focus for accessibility
+                        (el as HTMLElement).focus();
+                      } catch (e) {
+                        // ignore
+                      }
+                    } else {
+                      // Fallback: navigate to the contact route if section not present
+                      window.location.href = "/contact";
+                    }
+                  }}
+                >
+                  {plans[2].cta}
+                </Button>
               </CardFooter>
             </Card>
           </div>

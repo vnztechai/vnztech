@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 import TextType from "./TextType";
 
-const heroImage = "./images/3.png";
+const heroImage = "./images/3.webp";
 
 export default function Hero() {
   // const benefits = [

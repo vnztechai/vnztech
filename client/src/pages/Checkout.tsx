@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -239,6 +239,14 @@ function CheckoutForm({ plan, billing }: { plan: string; billing: string }) {
 
 export default function CheckoutSandbox() {
   const [location, setLocation] = useLocation();
+
+  useEffect(() => {
+    try {
+      window.scrollTo({ top: 0, behavior: "auto" });
+    } catch (e) {
+      // ignore in test environments
+    }
+  }, []);
 
   const params = new URLSearchParams(window.location.search);
   const plan = params.get("plan") || "pro";

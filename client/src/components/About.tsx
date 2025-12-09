@@ -30,19 +30,19 @@ export default function About() {
     {
       name: "Justin Timberland ",
       role: "FOUNDER & CEO",
-      image: "./images/19.png",
+      image: "./images/19.webp",
       bio: "Experience in The Field in 12 years",
     },
     {
       name: "Tony Edwardson",
       role: "CTO",
-      image: "./images/18.png",
+      image: "./images/18.webp",
       bio: "Former lead engineer at major tech companies",
     },
     {
       name: "Anna Hatherway",
       role: "COO",
-      image: "./images/17.png",
+      image: "./images/17.webp",
       bio: "In Operation more than 8+ years",
     },
   ];
@@ -126,7 +126,7 @@ export default function About() {
             <div className="story-image relative">
               <div className="">
                 <img
-                  src="./images/16.png"
+                  src="./images/16.webp"
                   alt="Team collaboration"
                   className="story-image-content w-full h-auto object-cover"
                 />

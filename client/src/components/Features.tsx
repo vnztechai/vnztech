@@ -17,42 +17,42 @@ export default function Features() {
       title: "AI-Driven Asset Intelligence",
       description:
         "Leverage advanced AI models to predict issues, detect anomalies, and automate asset oversight. Get smart recommendations that enhance performance",
-      imageSrc: "./images/4.png",
+      imageSrc: "./images/4.webp",
     },
     {
       icon: Zap,
       title: "Seamless IoT Connectivity",
       description:
         "Integrate effortlessly with sensors, devices, and existing enterprise systems. Our platform supports 100+ IoT protocols, ensuring smooth data flow",
-      imageSrc: "./images/5.png",
+      imageSrc: "./images/5.webp",
     },
     {
       icon: Users,
       title: "Real-Time Operational Collaboration",
       description:
         "Enable teams to monitor, analyze, and troubleshoot assets together in real time. Share insights instantly, sync updates",
-      imageSrc: "./images/6.png",
+      imageSrc: "./images/6.webp",
     },
     {
       icon: Shield,
       title: "Advanced-Grade Security & Compliance",
       description:
         "Protect mission-critical asset data with military-grade encryption, secure device authentication, and full compliance with global standards.",
-      imageSrc: "./images/7.png",
+      imageSrc: "./images/7.webp",
     },
     {
       icon: Rocket,
       title: "Ultra-Fast IoT Processing Engine",
       description:
         "Experience lightning-fast data ingestion and real-time updates from thousands of connected assets. Optimized infrastructure ensures zero delays.",
-      imageSrc: "./images/8.png",
+      imageSrc: "./images/8.webp",
     },
     {
       icon: BarChart,
       title: "Advanced Predictive Analytics",
       description:
         "Access deep insights through intelligent dashboards that forecast asset performance, detect early failure signs, and highlight optimization opportunities.",
-      imageSrc: "./images/9.png",
+      imageSrc: "./images/9.webp",
     },
   ];
 

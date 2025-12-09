@@ -15,7 +15,7 @@ export default function Benefits() {
         "Real-time IoT event processing",
       ],
       imageUrl:
-        "./images/10.png",
+        "./images/10.webp",
     },
     {
       title: "Enterprise-Grade Protection",
@@ -27,7 +27,7 @@ export default function Benefits() {
         "SOC 2 & GDPR–aligned architecture",
       ],
       imageUrl:
-        "./images/11.png",
+        "./images/11.webp",
     },
     {
       title: "Scalable IoT Infrastructure",
@@ -39,7 +39,7 @@ export default function Benefits() {
         "Worldwide low-latency data distribution",
       ],
       imageUrl:
-        "./images/12.png",
+        "./images/12.webp",
     },
   ];
 
